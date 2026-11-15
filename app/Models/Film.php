@@ -8,8 +8,45 @@ use Illuminate\Database\Eloquent\Model;
 class Film extends Model
 {
     use HasFactory;
-    protected $table = 'films';
-    protected $fillable = ['title','sinopsis','year','poster','genre_id'];
 
-    
+    protected $table = 'films';
+    protected $fillable = [
+        'title',
+        'sinopsis',
+        'year',
+        'poster',
+        'genre_id',
+    ];
+
+    /**
+     * Relasi ke model Genre
+     */
+    public function genre()
+    {
+        return $this->belongsTo(Genre::class, 'genre_id');
+    }
+
+    /**
+     * Relasi ke model Cast melalui tabel perans (many-to-many)
+     */
+    public function castMembers()
+    {
+        return $this->belongsToMany(Cast::class, 'perans', 'film_id', 'cast_id')->withPivot('actor')->withTimestamps();
+    }
+
+    /**
+     * Relasi ke model Peran
+     */
+    public function perans()
+    {
+        return $this->hasMany(Peran::class, 'film_id');
+    }
+
+    /**
+     * Relasi ke model Kritik (komentar film)
+     */
+    public function kritiks()
+    {
+        return $this->hasMany(Kritik::class, 'film_id');
+    }
 }

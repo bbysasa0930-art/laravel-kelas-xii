@@ -8,6 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Genre extends Model
 {
     use HasFactory;
+
     protected $table = 'genres';
     protected $fillable = ['name'];
+
+    /**
+     * Relasi ke model Film
+     */
+    public function films()
+    {
+        return $this->hasMany(Film::class, 'genre_id');
+    }
 }

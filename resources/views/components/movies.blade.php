@@ -38,7 +38,12 @@
                 </a>
                 <div class="mid-1">
                   <div class="w3l-movie-text">
-                    <h6><a href="{{ route('movies.show', $films[$data]->id) }}">{{ $films[$data]->title }}</a></h6>							
+                    <h6><a href="{{ route('movies.show', $films[$data]->id) }}">{{ $films[$data]->title }}</a></h6>
+                    @if(isset($films[$data]->castMembers) && $films[$data]->castMembers->isNotEmpty())
+                      <p style="font-size: 11px; color: #888; margin: 3px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="Cast: {{ $films[$data]->castMembers->pluck('name')->implode(', ') }}">
+                        <i class="fa fa-users" style="color: #FF8D1B; font-size: 10px;"></i> {{ $films[$data]->castMembers->take(2)->pluck('name')->implode(', ') }}
+                      </p>
+                    @endif
                   </div>
                   <div class="mid-2">
                     <p>{{ $films[$data]->year }}</p>
